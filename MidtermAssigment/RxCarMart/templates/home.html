@@ -1,0 +1,53 @@
+{% extends "base.html" %} 
+{% load static %}
+{% block content %}
+
+<div class="d-flex flex-wrap align-items-center justify-content-center px-5 pt-3" style="height:80vh;">
+  <div class="col-6">
+    <h1>Welcome to RxCarMart</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio quae eaque deleniti reprehenderit illum totam reiciendis et quisquam? Nam earum nesciunt debitis ad, veniam, illo animi omnis, laboriosam quas doloremque libero fugit. Ducimus perferendis suscipit id dolor labore, reiciendis repellat doloremque quaerat cupiditate doloribus. 
+    </p>
+  </div>
+  <div class="col-6">
+    <img class="rounded" style="width: 100%;" src="{% static 'header.jpeg' %}" alt="">
+  </div>
+</div>
+
+<div class="col-12 p-3">
+  <h5 class="text-center">All Brand</h5>
+  <div class="d-flex flex-wrap gap-3 justify-content-center  p-3 bg-white">
+    {% for b in  brands %}
+    <div>
+      
+        <a href="{% url 'brand_wise_car' b.slug %}" class="btn btn-warning text-center text-decoration-none text-dark">{{b.name}}</a>
+    
+    </div>
+    {% endfor %}
+  </div> 
+  <div class="col-12 p-2">
+    <h3 style="padding-left:5.5rem">{{data | length}} results found</h3>
+    <div class="d-flex flex-wrap gap-2 justify-content-center pt-5">
+      {% for p in data %}
+        <div class="col-sm-2">
+          <div class="card">
+            <img src="{{p.image.url}}" alt="">
+            <div class="card-body">
+              <h5 class="card-title">{{p.car_name}}</h5>
+              <p class="card-title">Price: {{p.price}}Tk.</p>
+              <p class="card-text">
+                {{p.description | truncatewords:15}}
+              </p>
+              <p>
+                  Brand :
+                     <button class="btn btn-primary btn-sm m-2" disabled>{{p.brand.name}}</button> 
+              </p>
+              <p><a href="{% url 'detail_car' p.id %}" class="btn btn-primary text-decoration-none text-white">View Details</a></p>
+            </div>
+          </div>
+        </div>
+      {% endfor %} 
+      </div>
+  </div>
+</div>
+
+{% endblock %}
